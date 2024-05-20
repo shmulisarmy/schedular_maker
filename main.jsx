@@ -73,11 +73,11 @@ function Day({day, switchDay}) {
     }
 
     function swapEvent (index_of_event, index_of_swap) {
-        const new_schedule = [...schedule];
-        const temp = new_schedule[index_of_event];
-        new_schedule[index_of_event] = new_schedule[index_of_swap];
-        new_schedule[index_of_swap] = temp;
-        setSchedule(new_schedule);
+        const temp = entire_schedule[day][index_of_event];
+        entire_schedule[day][index_of_event] = entire_schedule[day][index_of_swap];
+        entire_schedule[day][index_of_swap] = temp;
+        const this_days_schedule_clone = [...entire_schedule[day]];
+        setSchedule(this_days_schedule_clone);
     }
 
 
