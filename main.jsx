@@ -29,8 +29,6 @@ function Calendar_selected_day({ day }) {
     const setDayShowing = React.useContext(go_to_day_function_context);
     const dayShowing = React.useContext(dayShowing_context);
 
-    console.log('dayShowing, day', dayShowing, day)
-
     return (
         <td className={`selected-day ${(dayShowing == day ? "showing" : "")}`}
             onClick={() => setDayShowing(day)}>
@@ -70,7 +68,6 @@ function Calendar() {
     const weeks = [];
     for (let i = 0; i < days.length; i += 7) {
         const newly_computed_week = days.slice(i, i + 7);
-        console.log(newly_computed_week);
         weeks.push(newly_computed_week);
     }
 
@@ -140,7 +137,6 @@ function Event({ durraction, task, deleteEvent, swapEvent, index, start_time, en
 }
 
 function App() {
-    console.table(entire_schedule)
     const [dayShowing, setDayShowing] = React.useState(21);
 
     function switchDay(day_number) {
@@ -183,7 +179,6 @@ function Day({ day, switchDay }) {
     );
 
     time_now = day_start_time;
-    console.log(schedule)
 
     function deleteEvent(index_of_event) {
         const new_schedule = schedule.filter((_, index) => index !== index_of_event);
