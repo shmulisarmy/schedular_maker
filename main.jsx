@@ -1,3 +1,78 @@
+class ErrorBoundary extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = { hasError: false };
+    }
+  
+    static getDerivedStateFromError(error) {
+      // Update state so the next render will show the fallback UI.
+      return { hasError: true };
+    }
+  
+    componentDidCatch(error, errorInfo) {
+      // You can also log the error to an error reporting service
+      console.error("Error caught by ErrorBoundary: ", error, errorInfo);
+    }
+  
+    render() {
+      if (this.state.hasError) {
+        // You can render any custom fallback UI
+        return <h1>Something went wrong.</h1>;
+      }
+  
+      return this.props.children; 
+    }
+  }
+
+
+
+
+function Week ({week}) {
+    return (
+        <tr>
+            {week.map((day) => <td>{day}</td>)}
+        </tr>
+    )
+    
+}
+
+function Calendar() {
+    const days = [
+        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30
+    ]
+    
+    const weeks = [];
+    for (let i = 0; i < days.length; i += 7) {
+        const newly_computed_week = days.slice(i, i + 7);
+        console.log(newly_computed_week);
+        weeks.push(newly_computed_week);
+    }
+
+    console.table(weeks);
+    return (
+        <table>
+            <tbody>
+                <tr>
+                    <th>sun</th>
+                    <th>mon</th>
+                    <th>tues</th>
+                    <th>wed</th>
+                    <th>thur</th>
+                    <th>fri</th>
+                    <th>sat</th>
+                </tr>
+                {weeks.map(week => <Week {...{week}}/>)}
+                
+            </tbody>
+        </table>
+    )
+}
+
+
+
+
+
+
 function Form({ time_now, handleClickForaddEvent }) {
     return (
         <form>
@@ -58,6 +133,9 @@ function App() {
     
     return (
         <React.Fragment>
+           <ErrorBoundary>
+                <Calendar/>
+            </ErrorBoundary>
             <button onClick={() => {change_day_by(-1)}}> previous day</button>
             <button onClick={() => {change_day_by(1)}}> next day</button>
             <div class="week">

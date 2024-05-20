@@ -108,3 +108,33 @@ button {
 
 
 
+
+table {
+    margin: 10px;
+    border-collapse: collapse;
+    width: 400px;
+    background: linear-gradient(90deg, white, rgb(201, 228, 236));
+    border-radius: 4px;
+    color: black;
+}
+
+th{
+    border: 1px solid rgb(1, 28, 43);
+    padding: 10px;
+    text-align: center;
+    background: linear-gradient(90deg, lightgreen, rgb(75, 176, 75));
+    color: black;
+}
+
+td{
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
+}
+
+td:hover{
+    background-color: rgba(255, 166, 0, 0.654);
+    border: 2px solid darkblue;
+    cursor: pointer;
+}
+
