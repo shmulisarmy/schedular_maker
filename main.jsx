@@ -27,9 +27,12 @@ class ErrorBoundary extends React.Component {
 
 function Calendar_selected_day({ day }) {
     const setDayShowing = React.useContext(go_to_day_function_context);
+    const dayShowing = React.useContext(dayShowing_context);
+
+    console.log('dayShowing, day', dayShowing, day)
 
     return (
-        <td className="selected-day"
+        <td className={`selected-day ${(dayShowing == day ? "showing" : "")}`}
             onClick={() => setDayShowing(day)}>
             {day}
         </td>
@@ -147,18 +150,20 @@ function App() {
     }
 
     function change_day_by(amount) {
-        if (dayShowing in entire_schedule) {
-            const next_days_index = (list_of_days.indexOf(dayShowing) + amount) % 7;
-            const next_day_string = list_of_days[next_days_index];
-            setDayShowing(next_day_string);
+        if (typeof amount != 'number'){
+            throw new Error('amount must be a number');
         }
+        const new_day = dayShowing + amount;  
+        switchDay(new_day);
     }
 
     return (
         <React.Fragment>
             <ErrorBoundary>
                 <go_to_day_function_context.Provider value={setDayShowing}>
-                    <Calendar switchDay={switchDay} />
+                    <dayShowing_context.Provider value={dayShowing}>
+                        <Calendar switchDay={switchDay} />
+                    </dayShowing_context.Provider>
                 </go_to_day_function_context.Provider>
             </ErrorBoundary>
             <button onClick={() => { change_day_by(-1) }}> previous day</button>
@@ -250,13 +255,13 @@ const entire_schedule = {
         { durraction: 60, task: "learn react" },
         { durraction: 60, task: "learn react" },
     ],
-    23: [
+    22: [
         { durraction: 69, task: "breakfast" },
         { durraction: 180, task: "lunch" },
         { durraction: 120, task: "supper" },
         { durraction: 60, task: "learn react" },
     ],
-    24: [
+    23: [
         { durraction: 60, task: "breakfast" },
         { durraction: 180, task: "lunch" },
         { durraction: 120, task: "supper" },
@@ -309,6 +314,8 @@ function to_time_string(minutes) {
 }
 
 const go_to_day_function_context = React.createContext();
+const dayShowing_context = React.createContext();
+
 
 
 

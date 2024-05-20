@@ -1,27 +1,28 @@
-body{
+body {
     margin: 0%;
     background: linear-gradient(90deg, black, grey);
     color: white;
 }
 
-nav{
-            background-color: white;
-            border-bottom: 1px solid darkblue;
-            color: black;
-            display: flex;
-            justify-content: space-evenly;
-            position: sticky;
-            top: 0%;
-            z-index: 1;
-        }
+nav {
+    background-color: white;
+    border-bottom: 1px solid darkblue;
+    color: black;
+    display: flex;
+    justify-content: space-evenly;
+    position: sticky;
+    top: 0%;
+    z-index: 1;
+}
 
-.week{
+.week {
     margin: 10%;
     display: flex;
     justify-content: space-evenly;
     width: 1200px;
     transform: scale(.9);
 }
+
 main {
     position: relative;
     border: 4px solid black;
@@ -32,7 +33,7 @@ main {
     max-height: 700px;
     overflow-y: scroll;
 
-    h1{
+    h1 {
         z-index: 10;
         height: 100px;
         background-color: rgba(0, 0, 0, 0.835);
@@ -79,7 +80,7 @@ main {
 
 }
 
-form{
+form {
     position: sticky;
     bottom: 0;
     background: linear-gradient(30deg, rgb(100, 177, 203) 30%, rgba(29, 163, 29, 0.793));
@@ -91,7 +92,8 @@ form{
     text-shadow: 1px 1px 1px white;
 }
 
-.event:hover, .event:active {
+.event:hover,
+.event:active {
     cursor: move;
     transition: 0s;
     border: 4px solid darkblue;
@@ -118,7 +120,7 @@ table {
     color: black;
 }
 
-th{
+th {
     border: 1px solid rgb(1, 28, 43);
     padding: 10px;
     text-align: center;
@@ -126,19 +128,24 @@ th{
     color: black;
 }
 
-td{
+td {
     border: 1px solid black;
     padding: 10px;
     text-align: center;
 
 }
-    .selected-day {
-        background-color: cadetblue;
-    }
 
-td:hover{
-    background-color: rgba(255, 166, 0, 0.654);
-    border: 2px solid darkblue;
-    cursor: pointer;
+.selected-day {
+    background-color: cadetblue;
 }
 
+.showing {
+    background-color: rgb(10, 225, 225);
+}
+
+td:hover {
+    background-color: black;
+    color: white;
+    border: 4px solid darkblue;
+    cursor: pointer;
+}
