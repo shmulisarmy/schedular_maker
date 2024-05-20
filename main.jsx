@@ -39,6 +39,7 @@ function Event({ durraction, task, deleteEvent, swapEvent, index, start_time, en
 }
 
 function App() {
+    console.table(entire_schedule)
     const [dayShowing, setDayShowing] = React.useState("monday");
 
     function switchDay(day) {
@@ -68,7 +69,7 @@ function App() {
 
 
 function Day({day, switchDay}) {
-    console.log("individual day component: ", day)
+    console.table(entire_schedule[day])
     const [schedule, setSchedule] = React.useState(
         entire_schedule[day]
     );
