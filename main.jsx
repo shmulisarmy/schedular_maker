@@ -1,36 +1,44 @@
 class ErrorBoundary extends React.Component {
     constructor(props) {
-      super(props);
-      this.state = { hasError: false };
+        super(props);
+        this.state = { hasError: false };
     }
-  
+
     static getDerivedStateFromError(error) {
-      // Update state so the next render will show the fallback UI.
-      return { hasError: true };
+        // Update state so the next render will show the fallback UI.
+        return { hasError: true };
     }
-  
+
     componentDidCatch(error, errorInfo) {
-      // You can also log the error to an error reporting service
-      console.error("Error caught by ErrorBoundary: ", error, errorInfo);
+        // You can also log the error to an error reporting service
+        console.error("Error caught by ErrorBoundary: ", error, errorInfo);
     }
-  
+
     render() {
-      if (this.state.hasError) {
-        // You can render any custom fallback UI
-        return <h1>Something went wrong.</h1>;
-      }
-  
-      return this.props.children; 
+        if (this.state.hasError) {
+            // You can render any custom fallback UI
+            return <h1>Something went wrong.</h1>;
+        }
+
+        return this.props.children;
     }
-  }
+}
 
 
-  function Calendar_Day({day}) {
+function Calendar_selected_day({ day }) {
     const setDayShowing = React.useContext(go_to_day_function_context);
 
     return (
-        <td className={day in entire_schedule ? "selected-day" : ""}
+        <td className="selected-day"
             onClick={() => setDayShowing(day)}>
+            {day}
+        </td>
+    )
+}
+
+function Calendar_regular_day({ day }) {
+    return (
+        <td>
             {day}
         </td>
     )
@@ -38,21 +46,24 @@ class ErrorBoundary extends React.Component {
 
 
 
-
-function Week ({week}) {
+function Calendar_week({ week }) {
     return (
         <tr>
-            {week.map((day) => <Calendar_Day day={day}/>)}
+            {week.map((day) =>
+                day in entire_schedule ?
+                    <Calendar_selected_day day={day} />
+                    : <Calendar_regular_day day={day} />
+            )}
         </tr>
     )
-    
+
 }
 
-function Calendar({switchDay}) {
+function Calendar() {
     const days = [
         1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30
     ]
-    
+
     const weeks = [];
     for (let i = 0; i < days.length; i += 7) {
         const newly_computed_week = days.slice(i, i + 7);
@@ -73,8 +84,8 @@ function Calendar({switchDay}) {
                     <th>fri</th>
                     <th>sat</th>
                 </tr>
-                {weeks.map(week => <Week {...{week}}/>)}
-                
+                {weeks.map(week => <Calendar_week {...{ week }} />)}
+
             </tbody>
         </table>
     )
@@ -99,7 +110,7 @@ function Form({ time_now, handleClickForaddEvent }) {
 
             <br />
             <label for="ending-time: ">Choose a time for your meeting:</label>
-            <input type="time" id="meeting-time" name="meeting-time" min="09:00" max="18:00" required/>
+            <input type="time" id="meeting-time" name="meeting-time" min="09:00" max="18:00" required />
             <button onClick={handleClickForaddEvent}>add event {time_now}</button>
         </form>
     )
@@ -113,7 +124,7 @@ function Event({ durraction, task, deleteEvent, swapEvent, index, start_time, en
     const [editingTile, setEditingTile] = React.useState(false);
 
     return (
-        <div className="event" style={{ height: `${durraction/2}px` }} draggable="true" onDragStart={(e) => e.dataTransfer.setData('index', index)} onDragOver={(e) => e.preventDefault()} onDrop={(e) => swapEvent(index, Number(e.dataTransfer.getData('index')))}>
+        <div className="event" style={{ height: `${durraction / 2}px` }} draggable="true" onDragStart={(e) => e.dataTransfer.setData('index', index)} onDragOver={(e) => e.preventDefault()} onDrop={(e) => swapEvent(index, Number(e.dataTransfer.getData('index')))}>
 
             <div className="title" onClick={() => setEditingTile(!editingTile)}>{editingTile ? <input type='text' placeholder={task} autofocus /> : task}</div>
 
@@ -142,25 +153,25 @@ function App() {
             setDayShowing(next_day_string);
         }
     }
-    
+
     return (
         <React.Fragment>
-           <ErrorBoundary>
+            <ErrorBoundary>
                 <go_to_day_function_context.Provider value={setDayShowing}>
-                        <Calendar switchDay={switchDay}/>
+                    <Calendar switchDay={switchDay} />
                 </go_to_day_function_context.Provider>
             </ErrorBoundary>
-            <button onClick={() => {change_day_by(-1)}}> previous day</button>
-            <button onClick={() => {change_day_by(1)}}> next day</button>
+            <button onClick={() => { change_day_by(-1) }}> previous day</button>
+            <button onClick={() => { change_day_by(1) }}> next day</button>
             <div class="week">
-                <Day day={dayShowing} switchDay={switchDay} key={dayShowing}/>
+                <Day day={dayShowing} switchDay={switchDay} key={dayShowing} />
             </div>
         </React.Fragment>
-    )            
+    )
 }
 
 
-function Day({day, switchDay}) {
+function Day({ day, switchDay }) {
     console.table(entire_schedule[day])
     const [schedule, setSchedule] = React.useState(
         entire_schedule[day]
@@ -169,13 +180,13 @@ function Day({day, switchDay}) {
     time_now = day_start_time;
     console.log(schedule)
 
-    function deleteEvent (index_of_event)  {
+    function deleteEvent(index_of_event) {
         const new_schedule = schedule.filter((_, index) => index !== index_of_event);
         setSchedule(new_schedule);
 
     }
 
-    function swapEvent (index_of_event, index_of_swap) {
+    function swapEvent(index_of_event, index_of_swap) {
         const temp = entire_schedule[day][index_of_event];
         entire_schedule[day][index_of_event] = entire_schedule[day][index_of_swap];
         entire_schedule[day][index_of_swap] = temp;
@@ -194,7 +205,7 @@ function Day({day, switchDay}) {
 
         setSchedule(new_schedule);
     }
-    
+
 
     return (
         <React.Fragment>
@@ -204,9 +215,9 @@ function Day({day, switchDay}) {
                 <div class="tasks">
                     {schedule.map((event, index) => {
                         time_now += parseInt(event.durraction);
-                    return <Event {...event} {...{ deleteEvent, swapEvent, index, start_time: time_now - parseInt(event.durraction), end_time: time_now, handleClickForaddEvent }} key={index} />
+                        return <Event {...event} {...{ deleteEvent, swapEvent, index, start_time: time_now - parseInt(event.durraction), end_time: time_now, handleClickForaddEvent }} key={index} />
                     })}
-                    </div>
+                </div>
                 <Form {...{ time_now, handleClickForaddEvent }} />
             </main>
         </React.Fragment>
