@@ -46,9 +46,19 @@ function App() {
             setDayShowing(day);
         }
     }
+
+    function change_day_by(amount) {
+        if (dayShowing in entire_schedule) {
+            const next_days_index = (list_of_days.indexOf(dayShowing) + amount) % 7;
+            const next_day_string = list_of_days[next_days_index];
+            setDayShowing(next_day_string);
+        }
+    }
     
     return (
         <React.Fragment>
+            <button onClick={() => {change_day_by(-1)}}> previous day</button>
+            <button onClick={() => {change_day_by(1)}}> next day</button>
             <div class="week">
                 <Day day={dayShowing} switchDay={switchDay} key={dayShowing}/>
             </div>
@@ -147,8 +157,28 @@ const entire_schedule = {
         { durraction: 180, task: "lunch" },
         { durraction: 120, task: "supper" },
         { durraction: 60, task: "learn react" },
-    ]
+    ],
+    "thursday": [
+        { durraction: 60, task: "breakfast" },
+        { durraction: 180, task: "lunch" },
+        { durraction: 120, task: "supper" },
+        { durraction: 60, task: "learn react" },
+    ],
+    "friday": [
+        { durraction: 60, task: "breakfast" },
+        { durraction: 180, task: "lunch" },
+        { durraction: 120, task: "supper" },
+        { durraction: 60, task: "learn react" },
+    ],
+    "saturday": [
+        { durraction: 60, task: "breakfast" },
+        { durraction: 180, task: "lunch" },
+        { durraction: 120, task: "supper" },
+        { durraction: 60, task: "learn react" },
+    ],
 }
+
+const list_of_days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 
 
 function from_time_string(time_string) {
