@@ -16,11 +16,11 @@ nav {
 }
 
 .week {
-    margin: 10%;
+    /* margin: 10%; */
     display: flex;
     justify-content: space-evenly;
-    width: 1200px;
-    transform: scale(.9);
+    /* width: 1200px; */
+    /* transform: scale(.9); */
 }
 
 main {
