@@ -39,19 +39,36 @@ function Event({ durraction, task, deleteEvent, swapEvent, index, start_time, en
 }
 
 function App() {
+    const [dayShowing, setDayShowing] = React.useState("monday");
+
+    function switchDay(day) {
+        if (day in entire_schedule) {
+            setDayShowing(day);
+        }
+    }
+
+    function change_day_by(amount) {
+        if (dayShowing in entire_schedule) {
+            const next_days_index = (list_of_days.indexOf(dayShowing) + amount) % 7;
+            const next_day_string = list_of_days[next_days_index];
+            setDayShowing(next_day_string);
+        }
+    }
+    
     return (
         <React.Fragment>
+            <button onClick={() => {change_day_by(-1)}}> previous day</button>
+            <button onClick={() => {change_day_by(1)}}> next day</button>
             <div class="week">
-                <Day day="monday"/>
-                <Day day="tuesday"/>
-                <Day day="wednesday"/>
+                <Day day={dayShowing} switchDay={switchDay} key={dayShowing}/>
             </div>
         </React.Fragment>
     )            
 }
 
 
-function Day({day}) {
+function Day({day, switchDay}) {
+    console.log("individual day component: ", day)
     const [schedule, setSchedule] = React.useState(
         entire_schedule[day]
     );
@@ -66,11 +83,11 @@ function Day({day}) {
     }
 
     function swapEvent (index_of_event, index_of_swap) {
-        const new_schedule = [...schedule];
-        const temp = new_schedule[index_of_event];
-        new_schedule[index_of_event] = new_schedule[index_of_swap];
-        new_schedule[index_of_swap] = temp;
-        setSchedule(new_schedule);
+        const temp = entire_schedule[day][index_of_event];
+        entire_schedule[day][index_of_event] = entire_schedule[day][index_of_swap];
+        entire_schedule[day][index_of_swap] = temp;
+        const this_days_schedule_clone = [...entire_schedule[day]];
+        setSchedule(this_days_schedule_clone);
     }
 
 
@@ -90,6 +107,7 @@ function Day({day}) {
         <React.Fragment>
             <main>
                 <h1>{day}</h1>
+                <button onClick={() => switchDay(prompt("which day?: "))}>change day</button>
                 <div class="tasks">
                     {schedule.map((event, index) => {
                         time_now += parseInt(event.durraction);
@@ -112,6 +130,11 @@ let day_dragging_from;
 let index_of_draging;
 
 const entire_schedule = {
+    "sunday": [
+        { durraction: 60, task: "dokter" },
+        { durraction: 180, task: "lunch" },
+        { durraction: 120, task: "supper" },
+    ],
     "monday": [
         { durraction: 60, task: "breakfast" },
         { durraction: 180, task: "lunch" },
@@ -124,7 +147,7 @@ const entire_schedule = {
         { durraction: 60, task: "learn react" },
     ],
     "tuesday": [
-        { durraction: 60, task: "breakfast" },
+        { durraction: 69, task: "breakfast" },
         { durraction: 180, task: "lunch" },
         { durraction: 120, task: "supper" },
         { durraction: 60, task: "learn react" },
@@ -134,8 +157,28 @@ const entire_schedule = {
         { durraction: 180, task: "lunch" },
         { durraction: 120, task: "supper" },
         { durraction: 60, task: "learn react" },
-    ]
+    ],
+    "thursday": [
+        { durraction: 60, task: "breakfast" },
+        { durraction: 180, task: "lunch" },
+        { durraction: 120, task: "supper" },
+        { durraction: 60, task: "learn react" },
+    ],
+    "friday": [
+        { durraction: 60, task: "breakfast" },
+        { durraction: 180, task: "lunch" },
+        { durraction: 120, task: "supper" },
+        { durraction: 60, task: "learn react" },
+    ],
+    "saturday": [
+        { durraction: 60, task: "breakfast" },
+        { durraction: 180, task: "lunch" },
+        { durraction: 120, task: "supper" },
+        { durraction: 60, task: "learn react" },
+    ],
 }
+
+const list_of_days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 
 
 function from_time_string(time_string) {
@@ -160,6 +203,7 @@ function to_time_string(minutes) {
     }
     return `${hour}:${minute < 10 ? "0" : ""}${minute} AM`;
 }
+
 
 
 
