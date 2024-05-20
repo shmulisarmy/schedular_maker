@@ -211,7 +211,6 @@ function Day({ day, switchDay }) {
         <React.Fragment>
             <main>
                 <h1>{day}</h1>
-                <button onClick={() => switchDay(prompt("which day?: "))}>change day</button>
                 <div class="tasks">
                     {schedule.map((event, index) => {
                         time_now += parseInt(event.durraction);
