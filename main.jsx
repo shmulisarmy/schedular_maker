@@ -30,13 +30,13 @@ class ErrorBoundary extends React.Component {
 function Week ({week}) {
     return (
         <tr>
-            {week.map((day) => <td>{day}</td>)}
+            {week.map((day) => <td className={day in entire_schedule ? "selected-day" : ""}>{day}</td>)}
         </tr>
     )
     
 }
 
-function Calendar() {
+function Calendar({switchDay}) {
     const days = [
         1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30
     ]
@@ -115,11 +115,11 @@ function Event({ durraction, task, deleteEvent, swapEvent, index, start_time, en
 
 function App() {
     console.table(entire_schedule)
-    const [dayShowing, setDayShowing] = React.useState("monday");
+    const [dayShowing, setDayShowing] = React.useState(21);
 
-    function switchDay(day) {
-        if (day in entire_schedule) {
-            setDayShowing(day);
+    function switchDay(day_number) {
+        if (day_number in entire_schedule) {
+            setDayShowing(day_number);
         }
     }
 
@@ -134,7 +134,7 @@ function App() {
     return (
         <React.Fragment>
            <ErrorBoundary>
-                <Calendar/>
+                <Calendar switchDay={switchDay}/>
             </ErrorBoundary>
             <button onClick={() => {change_day_by(-1)}}> previous day</button>
             <button onClick={() => {change_day_by(1)}}> next day</button>
@@ -209,12 +209,12 @@ let day_dragging_from;
 let index_of_draging;
 
 const entire_schedule = {
-    "sunday": [
+    20: [
         { durraction: 60, task: "dokter" },
         { durraction: 180, task: "lunch" },
         { durraction: 120, task: "supper" },
     ],
-    "monday": [
+    21: [
         { durraction: 60, task: "breakfast" },
         { durraction: 180, task: "lunch" },
         { durraction: 120, task: "supper" },
@@ -225,31 +225,31 @@ const entire_schedule = {
         { durraction: 60, task: "learn react" },
         { durraction: 60, task: "learn react" },
     ],
-    "tuesday": [
+    23: [
         { durraction: 69, task: "breakfast" },
         { durraction: 180, task: "lunch" },
         { durraction: 120, task: "supper" },
         { durraction: 60, task: "learn react" },
     ],
-    "wednesday": [
+    24: [
         { durraction: 60, task: "breakfast" },
         { durraction: 180, task: "lunch" },
         { durraction: 120, task: "supper" },
         { durraction: 60, task: "learn react" },
     ],
-    "thursday": [
+    24: [
         { durraction: 60, task: "breakfast" },
         { durraction: 180, task: "lunch" },
         { durraction: 120, task: "supper" },
         { durraction: 60, task: "learn react" },
     ],
-    "friday": [
+    25: [
         { durraction: 60, task: "breakfast" },
         { durraction: 180, task: "lunch" },
         { durraction: 120, task: "supper" },
         { durraction: 60, task: "learn react" },
     ],
-    "saturday": [
+    26: [
         { durraction: 60, task: "breakfast" },
         { durraction: 180, task: "lunch" },
         { durraction: 120, task: "supper" },
@@ -282,6 +282,8 @@ function to_time_string(minutes) {
     }
     return `${hour}:${minute < 10 ? "0" : ""}${minute} AM`;
 }
+
+
 
 
 

@@ -130,7 +130,11 @@ td{
     border: 1px solid black;
     padding: 10px;
     text-align: center;
+
 }
+    .selected-day {
+        background-color: cadetblue;
+    }
 
 td:hover{
     background-color: rgba(255, 166, 0, 0.654);
