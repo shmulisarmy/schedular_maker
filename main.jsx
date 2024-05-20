@@ -25,12 +25,24 @@ class ErrorBoundary extends React.Component {
   }
 
 
+  function Calendar_Day({day}) {
+    const setDayShowing = React.useContext(go_to_day_function_context);
+
+    return (
+        <td className={day in entire_schedule ? "selected-day" : ""}
+            onClick={() => setDayShowing(day)}>
+            {day}
+        </td>
+    )
+}
+
+
 
 
 function Week ({week}) {
     return (
         <tr>
-            {week.map((day) => <td className={day in entire_schedule ? "selected-day" : ""}>{day}</td>)}
+            {week.map((day) => <Calendar_Day day={day}/>)}
         </tr>
     )
     
@@ -134,7 +146,9 @@ function App() {
     return (
         <React.Fragment>
            <ErrorBoundary>
-                <Calendar switchDay={switchDay}/>
+                <go_to_day_function_context.Provider value={setDayShowing}>
+                        <Calendar switchDay={switchDay}/>
+                </go_to_day_function_context.Provider>
             </ErrorBoundary>
             <button onClick={() => {change_day_by(-1)}}> previous day</button>
             <button onClick={() => {change_day_by(1)}}> next day</button>
@@ -283,7 +297,7 @@ function to_time_string(minutes) {
     return `${hour}:${minute < 10 ? "0" : ""}${minute} AM`;
 }
 
-
+const go_to_day_function_context = React.createContext();
 
 
 
