@@ -73,7 +73,7 @@ function Calendar() {
 
     console.table(weeks);
     return (
-        <table id="calendars">
+        <table id="calendar">
             <tbody>
                 <tr>
                     <th>sun</th>
@@ -244,7 +244,7 @@ const entire_schedule = {
         { durraction: 120, task: "supper" },
         { durraction: 60, task: "learn react" },
         { durraction: 60, task: "learn react" },
-        { durraction: 60, task: "learn react" },
+        { durraction: 60, task: "learn react learn react" },
         { durraction: 60, task: "learn react" },
         { durraction: 60, task: "learn react" },
         { durraction: 60, task: "learn react" },
