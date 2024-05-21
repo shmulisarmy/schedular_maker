@@ -19,6 +19,11 @@ def home(request: Request):
     return templates.TemplateResponse('main.html', {'request': request})
 
 
+@app.route('/test')
+def home(request: Request):
+    return templates.TemplateResponse('test.html', {'request': request})
+
+
 
 
 
