@@ -33,6 +33,9 @@ function Calendar_selected_day({ day }) {
         <td className={`selected-day ${(dayShowing == day ? "showing" : "")}`}
             onClick={() => setDayShowing(day)}>
             {day}
+            <div className="days-events-info">
+                {day} has {entire_schedule[day].length} events
+            </div>
         </td>
     )
 }
