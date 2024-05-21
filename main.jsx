@@ -73,7 +73,7 @@ function Calendar() {
 
     console.table(weeks);
     return (
-        <table>
+        <table id="calendars">
             <tbody>
                 <tr>
                     <th>sun</th>
@@ -146,26 +146,28 @@ function App() {
     }
 
     function change_day_by(amount) {
-        if (typeof amount != 'number'){
+        if (typeof amount != 'number') {
             throw new Error('amount must be a number');
         }
-        const new_day = dayShowing + amount;  
+        const new_day = dayShowing + amount;
         switchDay(new_day);
     }
 
     return (
-        <React.Fragment>
-            <ErrorBoundary>
-                <go_to_day_function_context.Provider value={setDayShowing}>
-                    <dayShowing_context.Provider value={dayShowing}>
-                        <Calendar switchDay={switchDay} />
-                    </dayShowing_context.Provider>
-                </go_to_day_function_context.Provider>
-            </ErrorBoundary>
-            <button onClick={() => { change_day_by(-1) }}> previous day</button>
-            <button onClick={() => { change_day_by(1) }}> next day</button>
-                <Day day={dayShowing} switchDay={switchDay} key={dayShowing} />
-        </React.Fragment>
+        <section>
+            <div className="day-selector">
+                <ErrorBoundary>
+                    <go_to_day_function_context.Provider value={setDayShowing}>
+                        <dayShowing_context.Provider value={dayShowing}>
+                            <Calendar switchDay={switchDay} />
+                        </dayShowing_context.Provider>
+                    </go_to_day_function_context.Provider>
+                </ErrorBoundary>
+                <button onClick={() => { change_day_by(-1) }}> previous day</button>
+                <button onClick={() => { change_day_by(1) }}> next day</button>
+            </div>
+            <Day day={dayShowing} switchDay={switchDay} key={dayShowing} />
+        </section>
     )
 }
 
