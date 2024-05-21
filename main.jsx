@@ -104,7 +104,7 @@ function Form({ time_now, handleClickForaddEvent }) {
         <form>
             <h3>time now: {time_now}</h3>
             <label for="task">task: </label>
-            <select name="" id="" required>
+            <select id="" required name="task">
                 <option value="swimming">swimmgin</option>
                 <option value="swimming">swimmgin</option>
                 <option value="swimming">swimmgin</option>
@@ -141,6 +141,9 @@ function Event({ durraction, task, deleteEvent, swapEvent, index, start_time, en
 
 function App() {
     const [dayShowing, setDayShowing] = React.useState(21);
+    //point of placeholder is to make rerender work when deleteEvent is called
+    const [placeholder, rerender] = React.useState(false);
+    
 
     function switchDay(day_number) {
         if (day_number in entire_schedule) {
@@ -169,13 +172,13 @@ function App() {
                 <button onClick={() => { change_day_by(-1) }}> previous day</button>
                 <button onClick={() => { change_day_by(1) }}> next day</button>
             </div>
-            <Day day={dayShowing} switchDay={switchDay} key={dayShowing} />
+            <Day day={dayShowing} switchDay={switchDay} key={dayShowing} rerender={rerender} placeholder={placeholder} />
         </section>
     )
 }
 
 
-function Day({ day, switchDay }) {
+function Day({ day, switchDay, rerender, placeholder }) {
     console.table(entire_schedule[day])
     const [schedule, setSchedule] = React.useState(
         entire_schedule[day]
@@ -184,8 +187,11 @@ function Day({ day, switchDay }) {
     time_now = day_start_time;
 
     function deleteEvent(index_of_event) {
-        const new_schedule = schedule.filter((_, index) => index !== index_of_event);
-        setSchedule(new_schedule);
+        const current_day = entire_schedule[day];
+        current_day.splice(index_of_event, 1);
+        console.log(current_day);
+        setSchedule([...current_day]);
+        rerender(!placeholder);
 
     }
 
