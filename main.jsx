@@ -87,8 +87,7 @@ function Calendar() {
                     <th>fri</th>
                     <th>sat</th>
                 </tr>
-                {weeks.map(week => <Calendar_week {...{ week }} />)}
-
+                {weeks.map(week => <Calendar_week {...{ week }} key={week[0]} />)}
             </tbody>
         </table>
     )
@@ -220,10 +219,13 @@ function Day({ day, switchDay, rerender, placeholder }) {
         <React.Fragment>
             <main>
                 <h1>{day}</h1>
-                <div class="tasks">
+                <div className="tasks">
                     {schedule.map((event, index) => {
                         time_now += parseInt(event.durraction);
-                        return <Event {...event} {...{ deleteEvent, swapEvent, index, start_time: time_now - parseInt(event.durraction), end_time: time_now, handleClickForaddEvent }} key={index} />
+                        return <Event
+                            {...event}
+                            {...{ deleteEvent, swapEvent, index, start_time: time_now - parseInt(event.durraction), end_time: time_now, handleClickForaddEvent }}
+                            key={time_now-parseInt(event.durraction)} />
                     })}
                 </div>
                 <Form {...{ time_now, handleClickForaddEvent }} />
