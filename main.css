@@ -18,7 +18,7 @@ nav {
 section {
     background-color: rgb(71, 69, 69);
     display: flex;
-    /* width: fit-content; */
+    width: fit-content;
 }
 
 main {
