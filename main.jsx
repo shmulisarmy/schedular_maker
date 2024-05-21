@@ -164,9 +164,7 @@ function App() {
             </ErrorBoundary>
             <button onClick={() => { change_day_by(-1) }}> previous day</button>
             <button onClick={() => { change_day_by(1) }}> next day</button>
-            <div class="week">
                 <Day day={dayShowing} switchDay={switchDay} key={dayShowing} />
-            </div>
         </React.Fragment>
     )
 }
