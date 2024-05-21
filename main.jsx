@@ -29,9 +29,6 @@ function Event({ durraction, task, deleteEvent, swapEvent, index, start_time, en
         <div className="event" style={{ height: `${durraction / 2}px` }} draggable="true" onDragStart={(e) => e.dataTransfer.setData('index', index)} onDragOver={(e) => e.preventDefault()} onDrop={(e) => swapEvent(index, Number(e.dataTransfer.getData('index')))}>
 
             <div className="title" onClick={() => setEditingTile(!editingTile)}>{editingTile ? <input type='text' placeholder={task} autofocus /> : task}</div>
-
-
-            {/* <div>durraction: {durraction}</div> */}
             <div>{to_time_string(start_time)} - {to_time_string(end_time)}</div>
             <button className="delete" onClick={() => deleteEvent(index)}>x</button>
         </div>
@@ -42,7 +39,7 @@ function App() {
     const [dayShowing, setDayShowing] = React.useState(21);
     //point of placeholder is to make rerender work when deleteEvent is called
     const [placeholder, rerender] = React.useState(false);
-    
+
 
     function switchDay(day_number) {
         if (day_number in entire_schedule) {
@@ -59,7 +56,7 @@ function App() {
     }
 
     return (
-        
+
         <section>
             <div className="day-selector">
                 <ErrorBoundary>
@@ -121,14 +118,13 @@ function Day({ day, switchDay, rerender, placeholder }) {
     return (
         <React.Fragment>
             <main>
-                <h1>{day}</h1>
                 <div className="tasks">
                     {schedule.map((event, index) => {
                         time_now += parseInt(event.durraction);
                         return <Event
                             {...event}
                             {...{ deleteEvent, swapEvent, index, start_time: time_now - parseInt(event.durraction), end_time: time_now, handleClickForaddEvent }}
-                            key={time_now-parseInt(event.durraction)} />
+                            key={time_now - parseInt(event.durraction)} />
                     })}
                 </div>
                 <Form {...{ time_now, handleClickForaddEvent }} />

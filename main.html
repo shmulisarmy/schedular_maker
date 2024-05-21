@@ -15,36 +15,10 @@
     <script type="text/babel" src="calendar.jsx" defer></script>
     <script type="text/babel" src="main.jsx?v=1" defer></script>
 
-    <script>
-        function change_week_size(amount) {
-            const $week = document.querySelector('.week');
-            week_size += amount;
-            // week_size = Math.min(1.05, week_size);
-            console.log(week_size);
-            $week.style.transform = `scale(${week_size}) translateY(${week_size*(-100)}px)`;
-        }
-        
-        let week_size = 1;
-    </script>
 </head>
 
 <body>
-    <nav>
-        <h1>todo</h1>
-        <p>home</p>
-        <div class="buttons" style="margin: 10px;" z-index="1">
 
-            <button onclick="change_week_size(-.02)">-</button>
-            <button onclick="change_week_size(.02)">+</button>
-        </div>
-    </nav>
     <div id="root"></div>
-
-    
-
-
-
-
 </body>
-
 </html>
