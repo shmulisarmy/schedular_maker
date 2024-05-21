@@ -3,7 +3,7 @@ function Form({ time_now, handleClickForaddEvent }) {
         <form>
             <h3>time now: {time_now}</h3>
             <label for="task">task: </label>
-            <select id="" required name="task">
+            <select id="task" required name="task">
                 <option value="swimming">swimmgin</option>
                 <option value="swimming">swimmgin</option>
                 <option value="swimming">swimmgin</option>
@@ -110,9 +110,11 @@ function Day({ day, switchDay, rerender, placeholder }) {
         const task_name = document.getElementById("task").value;
         const event_ending_time = document.getElementById("meeting-time").value;
         const durraction = from_time_string(event_ending_time) - time_now;
-        const new_schedule = [...schedule, { durraction: durraction, task: task_name }]
-
-        setSchedule(new_schedule);
+        console.log(durraction, task_name);
+        entire_schedule[day].push({ durraction: durraction, task: task_name });
+        // const new_schedule = [...schedule, { durraction: durraction, task: task_name }]
+        rerender(!placeholder);
+        setSchedule([...entire_schedule[day]]);
     }
 
 
